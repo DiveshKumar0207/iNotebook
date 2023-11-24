@@ -7,22 +7,7 @@ const authControllers = require("../controllers/authController");
 
 const verifyToken = require("../../middleware/verifyJwt");
 
-// ROUTE-1 =========================================================
-router.get(
-  "/note",
-  [
-    body("title").trim().isLength({min: 3}).escape(),
-    body("description")
-      .trim()
-      .isLength({min: 10})
-      .escape()
-      .withMessage("Enter long description"),
-    body("tag").trim().isLength({min: 3}).escape(),
-  ],
-  noteControllers.note
-);
-
-// ROUTE-2: ====================== CREATE A USER =======================
+// ROUTE-1: ====================== CREATE A USER =======================
 router.post(
   "/createuser",
   [
@@ -71,5 +56,43 @@ router.post(
 
 // ROUTE-3 ====================== GET USER-DATA ============================================
 router.post("/getuser", verifyToken, authControllers.getuser);
+
+// ROUTE-1 ======================  CREATE NOTES =================================================
+router.post(
+  "/createNote",
+  [
+    body("title").trim().isLength({min: 3}).escape(),
+    body("description")
+      .trim()
+      .isLength({min: 10})
+      .escape()
+      .withMessage("Enter at least 10 characters"),
+    body("tag").trim().isLength({min: 3}).escape(),
+  ],
+  verifyToken,
+  noteControllers.createNote
+);
+
+// ROUTE-4 ====================== FETCH ALL NOTES ============================================
+router.get("/fetchnote", verifyToken, noteControllers.fetchNotes);
+
+// ROUTE-5 ====================== FETCH ALL NOTES ============================================
+router.put(
+  "/updatenote/:id",
+  [
+    body("title").trim().isLength({min: 3}).escape(),
+    body("description")
+      .trim()
+      .isLength({min: 10})
+      .escape()
+      .withMessage("Enter at least 10 characters"),
+    body("tag").trim().isLength({min: 3}).escape(),
+  ],
+  verifyToken,
+  noteControllers.updateNotes
+);
+
+// ROUTE-6 ====================== FETCH ALL NOTES ============================================
+router.delete("/deletenote/:id", verifyToken, noteControllers.deleteNotes);
 
 module.exports = router;

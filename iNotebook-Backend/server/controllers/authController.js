@@ -24,7 +24,12 @@ exports.createUser = async (req, res) => {
       return res.status(400).json({message: "Email already in use"});
     }
 
-    const user = new Users(validatedData);
+    const user = new Users({
+      name: validatedData.name,
+      email: validatedData.email,
+      password: validatedData.password,
+      date: req.body.date,
+    });
 
     const newUser = await user.save();
 
