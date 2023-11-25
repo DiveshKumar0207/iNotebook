@@ -2,7 +2,7 @@ const express = require("express");
 const {query, matchedData, validationResult} = require("express-validator");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-require("dotenv").config();
+require("dotenv").config({path: "../iNotebook-Backend/.env"});
 
 const Users = require("../../db/models/User");
 

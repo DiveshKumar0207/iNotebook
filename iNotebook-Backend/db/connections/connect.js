@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config({path: "../iNotebook-Backend/.env"});
 
 const URL = "mongodb://127.0.0.1:27017/iNotebook";
 

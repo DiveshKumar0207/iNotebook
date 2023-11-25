@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import PropTypes from "prop-types";
+import { BrowserRouter } from "react-router-dom";
 
 class ErrorBoundary extends Component {
   static propTypes = {
@@ -33,7 +34,9 @@ class ErrorBoundary extends Component {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>,
 );

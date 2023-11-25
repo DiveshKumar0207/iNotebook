@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
+
+var cors = require("cors");
 const cookieParser = require("cookie-parser");
+
+// app.use(cors());
 
 require("./db/connections/connect");
 const routes = require("./server/routes/route");
