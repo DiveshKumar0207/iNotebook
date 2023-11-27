@@ -70,7 +70,7 @@ export default withMT({
         },
 
         errorColor: {
-          light: "B00020",
+          light: "#B00020",
           dark: "#cf6679",
         },
 

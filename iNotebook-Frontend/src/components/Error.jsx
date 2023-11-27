@@ -13,7 +13,7 @@ export default function Error() {
           <div className="max-w-md">
             <div className="font-dark text-5xl font-bold">404</div>
             <p className="text-2xl font-light leading-normal md:text-3xl">
-              Sorry we couldnt find this page.
+              Sorry we couldn&apos;t find this page.
             </p>
             <p className="mb-8">
               But dont worry, you can find plenty of other things on our

@@ -1,7 +1,7 @@
 const Notes = require("../../db/models/Note");
 const {body, matchedData, validationResult} = require("express-validator");
 
-// ======================== CREATE NOTES OF A USER. Endpoint:  /api/createnote =======================================
+// ======================== CREATE NOTES OF A USER. Endpoint:  /api/note/createnote =======================================
 exports.createNote = async (req, res) => {
   // validaion error
   const errors = validationResult(req);
@@ -43,7 +43,7 @@ exports.createNote = async (req, res) => {
   }
 };
 
-// ======================== FETCH ALL NOTES OF USER. Endpoint:  /api/fetchnote =======================================
+// ======================== FETCH ALL NOTES OF USER. Endpoint:  /api/note/fetchnote =======================================
 exports.fetchNotes = async (req, res) => {
   try {
     const fetchedNotes = await Notes.find({userid: req.user.id});
@@ -70,7 +70,7 @@ exports.fetchNotes = async (req, res) => {
   }
 };
 
-// ======================== UPDATE  NOTE OF USER. Endpoint:  /api/updatenews =======================================
+// ======================== UPDATE  NOTE OF USER. Endpoint:  /api/note/updatenews =======================================
 exports.updateNotes = async (req, res) => {
   // validaion error
   const errors = validationResult(req);
@@ -132,7 +132,7 @@ exports.updateNotes = async (req, res) => {
   }
 };
 
-// ======================== DELETE  NOTE OF USER. Endpoint:  /api/deletenote =======================================
+// ======================== DELETE  NOTE OF USER. Endpoint:  /api/note/deletenote =======================================
 exports.deleteNotes = async (req, res) => {
   try {
     const givenNoteID = req.params.id;

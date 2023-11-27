@@ -6,7 +6,7 @@ require("dotenv").config({path: "../iNotebook-Backend/.env"});
 
 const Users = require("../../db/models/User");
 
-// FIRST : ====================== createuser controller ===============================================
+// FIRST : ====================== createuser controller. Endpoint:  /api/auth/createuser ===============================================
 exports.createUser = async (req, res) => {
   // validaion error
   const errors = validationResult(req);
@@ -62,7 +62,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// SECOND:  ====================== AUTHENTICATE USER : LOG-IN  ===============================================
+// SECOND:  ====================== AUTHENTICATE USER : LOG-IN. Endpoint:  /api/auth/login  ===============================================
 exports.login = async (req, res) => {
   // validaion error
   const errors = validationResult(req);
@@ -113,7 +113,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// THIRD:  ======================  GET USER DATA  ===============================================
+// THIRD:  ======================  GET USER DATA. Endpoint:  /api/auth/getuser  ===============================================
 
 exports.getuser = async (req, res) => {
   try {

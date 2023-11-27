@@ -9,7 +9,7 @@ const verifyToken = require("../../middleware/verifyJwt");
 
 // ROUTE-1: ====================== CREATE A USER =======================
 router.post(
-  "/createuser",
+  "/auth/createuser",
   [
     body("name").trim().isLength({min: 3}).escape(),
     body("email")
@@ -42,7 +42,7 @@ router.post(
 
 // ROUTE-2:  ===============================  LOGIN =======================================
 router.post(
-  "/login",
+  "/auth/login",
   [
     body("email")
       .trim()
@@ -55,44 +55,52 @@ router.post(
 );
 
 // ROUTE-3 ====================== GET USER-DATA ============================================
-router.post("/getuser", verifyToken, authControllers.getuser);
+router.post("/auth/getuser", verifyToken, authControllers.getuser);
 
 // ROUTE-1 ======================  CREATE NOTES =================================================
 router.post(
-  "/createNote",
+  "/note/createNote",
   [
     body("title").trim().isLength({min: 3}).escape(),
     body("description")
       .trim()
-      .isLength({min: 10})
+      .isLength({min: 8})
       .escape()
-      .withMessage("Enter at least 10 characters"),
-    body("tag").trim().isLength({min: 3}).escape(),
+      .withMessage("Enter at least 8 characters"),
+    body("tag")
+      .trim()
+      .isLength({min: 2, max: 10})
+      .withMessage("Tag must be between 2 and 10 characters")
+      .escape(),
   ],
   verifyToken,
   noteControllers.createNote
 );
 
 // ROUTE-4 ====================== FETCH ALL NOTES ============================================
-router.get("/fetchnote", verifyToken, noteControllers.fetchNotes);
+router.get("/note/fetchnote", verifyToken, noteControllers.fetchNotes);
 
 // ROUTE-5 ====================== FETCH ALL NOTES ============================================
 router.put(
-  "/updatenote/:id",
+  "/note/updatenote/:id",
   [
     body("title").trim().isLength({min: 3}).escape(),
     body("description")
       .trim()
-      .isLength({min: 10})
+      .isLength({min: 8})
       .escape()
-      .withMessage("Enter at least 10 characters"),
-    body("tag").trim().isLength({min: 3}).escape(),
+      .withMessage("Enter at least 8 characters"),
+    body("tag")
+      .trim()
+      .isLength({min: 2, max: 10})
+      .withMessage("Tag must be between 2 and 10 characters")
+      .escape(),
   ],
   verifyToken,
   noteControllers.updateNotes
 );
 
 // ROUTE-6 ====================== FETCH ALL NOTES ============================================
-router.delete("/deletenote/:id", verifyToken, noteControllers.deleteNotes);
+router.delete("/note/deletenote/:id", verifyToken, noteControllers.deleteNotes);
 
 module.exports = router;
