@@ -27,7 +27,7 @@ router.post(
       .withMessage("Password must contain at least one uppercase letter")
       .matches(/\d/)
       .withMessage("Password must contain at least one digit")
-      .matches(/[!@#$%^&*(),.?":{}|<>]/)
+      .matches(/[!@#$%^&*()_+-=]/)
       .withMessage("Password must contain at least one special character")
       .escape(),
     body("confirmPassword").custom((value, {req}) => {

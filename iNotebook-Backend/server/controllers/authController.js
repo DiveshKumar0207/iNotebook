@@ -122,7 +122,7 @@ exports.getuser = async (req, res) => {
 
     const user = await Users.findById(requiredUserID).select("-password");
 
-    res.json(user);
+    res.status(200).json(user);
   } catch (error) {
     console.error(error);
 
