@@ -10,6 +10,7 @@ import * as Yup from "yup";
 
 import NoteContext from "../context/notes/NoteContext";
 import { useContext } from "react";
+import AlertContext from "../context/alert/AlertContext";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -33,6 +34,8 @@ export default function EditNoteForm() {
     setIsEditFormOpen,
     editFormInitialValues,
   } = context;
+  const alertContext = useContext(AlertContext);
+  const { handleAlertBar } = alertContext;
 
   function closeModal() {
     setIsEditFormOpen(false);
@@ -47,6 +50,7 @@ export default function EditNoteForm() {
 
     updateNote(id, values);
 
+    handleAlertBar("Note had been updated !");
     setSubmitting(false);
     closeModal();
   };
@@ -116,7 +120,7 @@ export default function EditNoteForm() {
                     validationSchema={validationSchema}
                     onSubmit={handleFormSubmit}
                   >
-                    {({ handleSubmit }) => (
+                    {({ handleSubmit, errors }) => (
                       <form onSubmit={handleSubmit} method="post">
                         <div className="mt-2">
                           <div className="grid gap-4">
@@ -163,7 +167,14 @@ export default function EditNoteForm() {
 
                           <button
                             type="submit"
-                            className="inline-flex  justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm  font-medium text-blue-900 outline-none ring-2 ring-blue-500 ring-offset-1  hover:bg-blue-200 active:ring-offset-2"
+                            className={`inline-flex  justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm  font-medium text-blue-900 outline-none ring-2 ring-blue-500 ring-offset-1  hover:bg-blue-200  active:ring-offset-2  
+                                           ${
+                                             Object.keys(errors).length > 0
+                                               ? "cursor-not-allowed opacity-70"
+                                               : ""
+                                           }`}
+                            // if theres a error, button will be disabled
+                            disabled={Object.keys(errors).length > 0}
                           >
                             Update Note!
                           </button>

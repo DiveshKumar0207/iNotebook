@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import NoteContext from "../context/notes/NoteContext";
 import {
   Card,
   CardBody,
@@ -9,10 +8,14 @@ import {
 } from "@material-tailwind/react";
 import PropType from "prop-types";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import NoteContext from "../context/notes/NoteContext";
+import AlertContext from "../context/alert/AlertContext";
 
 export default function NoteItem(props) {
   const context = useContext(NoteContext);
   const { deleteNote, openEditForm } = context;
+  const alertContext = useContext(AlertContext);
+  const { handleAlertBar } = alertContext;
 
   const { note } = props;
   return (
@@ -40,6 +43,7 @@ export default function NoteItem(props) {
               className=" w-5 cursor-pointer"
               onClick={() => {
                 deleteNote(note._id);
+                handleAlertBar("Note has been deleted !");
               }}
             />
             <PencilSquareIcon

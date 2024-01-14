@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Navbar,
   //   MobileNav,
@@ -7,11 +7,21 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
-import { NavLink } from "react-router-dom";
-// import {  Outlet } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import AuthContext from "../context/auth/AuthContext";
 
 export default function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
+
+  const authContext = useContext(AuthContext);
+  const { userLogOutFunc } = authContext;
+
+  // const panelTypeChangeToLogin = () => {
+  //   setType("login");
+  // };
+  // const panelTypeChangeToSignup = () => {
+  //   setType("signup");
+  // };
 
   React.useEffect(() => {
     window.addEventListener(
@@ -59,31 +69,50 @@ export default function StickyNavbar() {
     <>
       <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between text-blue-gray-900">
-          <Typography
-            as="a"
-            href="#"
-            className="mr-4 cursor-pointer py-1.5 font-medium"
-          >
+          <Typography as="a" className="mr-4 cursor-pointer py-1.5 font-medium">
             iNotebook
           </Typography>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
-            <div className="flex items-center gap-x-1">
-              <Button
-                variant="text"
-                size="sm"
-                className="hidden lg:inline-block"
-              >
-                <span>Log In</span>
-              </Button>
-              <Button
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block"
-              >
-                <span>Sign in</span>
-              </Button>
-            </div>
+
+            {/* if token in localstorage present, then show logout button otherwise login $ sign-up button */}
+            {!localStorage.getItem("token") ? (
+              <div className="flex items-center gap-x-1">
+                {/* <Link to={"/auth"}>
+                  <Button
+                    // onClick={panelTypeChangeToLogin}
+                    variant="text"
+                    size="sm"
+                    className="hidden lg:inline-block"
+                  >
+                    <span>Log In</span>
+                  </Button>
+                </Link> */}
+
+                <Link to={"/auth"}>
+                  <Button
+                    // onClick={panelTypeChangeToSignup}
+                    variant="gradient"
+                    size="sm"
+                    className="hidden lg:inline-block"
+                  >
+                    <span>Log in</span>
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center gap-x-1">
+                <Button
+                  onClick={userLogOutFunc}
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                >
+                  <span>Log out</span>
+                </Button>
+              </div>
+            )}
+
             <IconButton
               variant="text"
               className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

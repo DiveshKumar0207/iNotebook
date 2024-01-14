@@ -20,6 +20,9 @@ export default function NotesContainer() {
           </div>
         );
       })}
+      {allNotes.length === 0 && (
+        <div className=" text-sm">No Notes available</div>
+      )}
     </div>
   );
 }
