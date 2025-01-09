@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import NoteContext from "../context/notes/NoteContext";
 
 import { useContext } from "react";
-import AlertContext from "../context/alert/AlertContext";
+import { showToast } from "../utils/ToastHandler";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -30,8 +30,6 @@ const validationSchema = Yup.object({
 export default function MyModal() {
   const noteContext = useContext(NoteContext);
   const { addNote } = noteContext;
-  const alertContext = useContext(AlertContext);
-  const { handleAlertBar } = alertContext;
 
   let [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +51,7 @@ export default function MyModal() {
     // addNote() fn is from NoteContext
     addNote(values);
 
-    handleAlertBar("Note added !");
+    showToast("Note added !", "success");
 
     setSubmitting(false);
     closeModal();

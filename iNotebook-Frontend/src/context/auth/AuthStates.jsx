@@ -21,7 +21,12 @@ const AuthStates = (props) => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        const errorMessage = await response.text();
+
+        return {
+          success: false,
+          message: errorMessage || `HTTP error! Status: ${response.status}`,
+        };
       }
 
       const data = await response.json();
@@ -30,7 +35,7 @@ const AuthStates = (props) => {
 
       navigate("/");
 
-      console.log(data);
+      return { success: true, message: "Login successful!" };
     } catch (error) {
       console.log("Error : ", error.message);
     }
@@ -48,15 +53,17 @@ const AuthStates = (props) => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        const errorMessage = await response.text();
+        return {
+          success: false,
+          message: errorMessage || `HTTP error! Status: ${response.status}`,
+        };
       }
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
 
       navigate("/");
-
-      console.log(data);
     } catch (error) {
       console.log("Error : ", error.message);
     }

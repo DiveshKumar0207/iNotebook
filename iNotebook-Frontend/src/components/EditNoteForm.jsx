@@ -10,7 +10,7 @@ import * as Yup from "yup";
 
 import NoteContext from "../context/notes/NoteContext";
 import { useContext } from "react";
-import AlertContext from "../context/alert/AlertContext";
+import { showToast } from "../utils/ToastHandler";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -34,8 +34,6 @@ export default function EditNoteForm() {
     setIsEditFormOpen,
     editFormInitialValues,
   } = context;
-  const alertContext = useContext(AlertContext);
-  const { handleAlertBar } = alertContext;
 
   function closeModal() {
     setIsEditFormOpen(false);
@@ -50,7 +48,7 @@ export default function EditNoteForm() {
 
     updateNote(id, values);
 
-    handleAlertBar("Note had been updated !");
+    showToast("Note had been updated !", "success");
     setSubmitting(false);
     closeModal();
   };

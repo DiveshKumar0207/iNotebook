@@ -17,8 +17,7 @@ import {
 } from "@material-tailwind/react";
 
 import AuthContext from "../context/auth/AuthContext";
-import AlertContext from "../context/alert/AlertContext";
-import AlertDialog from "./AlertDialog";
+import { showToast } from "../utils/ToastHandler";
 
 // ====== login validation schema==========
 const loginValidationSchema = Yup.object({
@@ -57,9 +56,6 @@ export default function LoginSignupForm() {
   const authContext = useContext(AuthContext);
   const { userLoginFunc, userSignUpFunc } = authContext;
 
-  const alertContext = useContext(AlertContext);
-  const { handleAlertBar } = alertContext;
-
   // -- type => if its login or signup // to switch card-panels --
   const [type, setType] = useState("login");
   // ================== login =======
@@ -67,11 +63,18 @@ export default function LoginSignupForm() {
     email: "",
     password: "",
   };
-  const loginHandleSubmit = (values, { setSubmitting }) => {
+  //
+  const loginHandleSubmit = async (values, { setSubmitting }) => {
     // Handle login form submission logic here
-    userLoginFunc(values);
+    const response = await userLoginFunc(values);
 
-    handleAlertBar("Welcome user! ");
+    // Check if the response indicates success
+    if (response.success) {
+      showToast("Welcome user!", "success");
+    } else {
+      // If the response has an error message or failed flag
+      showToast("Login failed", "error");
+    }
     setSubmitting(false);
   };
 
@@ -82,11 +85,21 @@ export default function LoginSignupForm() {
     password: "",
     confirmPassword: "",
   };
-  const signupHandleSubmit = (values, { setSubmitting }) => {
+  //
+  const signupHandleSubmit = async (values, { setSubmitting }) => {
     // Handle login form submission logic here
-    userSignUpFunc(values);
+    const response = await userSignUpFunc(values);
 
-    handleAlertBar("Welcome user! Your account has been successfully created.");
+    // Check if the response indicates success
+    if (response.success) {
+      showToast(
+        "Welcome user! Your account has been successfully created.",
+        "success",
+      );
+    } else {
+      // If the response has an error message or failed flag
+      showToast("Account creation failed", "error");
+    }
     setSubmitting(false);
   };
 
@@ -96,9 +109,6 @@ export default function LoginSignupForm() {
       className=" flex items-center justify-center"
     >
       {/* alerting purpose */}
-      <div>
-        <AlertDialog />
-      </div>
 
       <Card className="w-full max-w-[24rem]">
         <CardHeader

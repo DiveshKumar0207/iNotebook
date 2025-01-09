@@ -9,13 +9,11 @@ import {
 import PropType from "prop-types";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import NoteContext from "../context/notes/NoteContext";
-import AlertContext from "../context/alert/AlertContext";
+import { showToast } from "../utils/ToastHandler";
 
 export default function NoteItem(props) {
   const context = useContext(NoteContext);
   const { deleteNote, openEditForm } = context;
-  const alertContext = useContext(AlertContext);
-  const { handleAlertBar } = alertContext;
 
   const { note } = props;
   return (
@@ -43,7 +41,7 @@ export default function NoteItem(props) {
               className=" w-5 cursor-pointer"
               onClick={() => {
                 deleteNote(note._id);
-                handleAlertBar("Note has been deleted !");
+                showToast("Note has been deleted !", "success");
               }}
             />
             <PencilSquareIcon
